@@ -119,12 +119,14 @@ const FeaturesSection = () => {
                   elevation={3}
                   sx={{
                     padding: theme.spacing(4),
-                    height: '100%',
+                    height: '100%', // Ensure the paper takes full height of its grid item
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'flex-start',
                     borderRadius: theme.components?.MuiCard?.styleOverrides?.root?.borderRadius || '8px',
+                    // Add a minHeight to ensure consistency across cards
+                    minHeight: { xs: '280px', sm: '300px', md: '320px' }, // Adjust this value as needed
                   }}
                 >
                   {/* Render the Material-UI Icon Component */}
@@ -132,7 +134,19 @@ const FeaturesSection = () => {
                   <Typography variant="h6" component="h3" gutterBottom sx={{ fontWeight: 600 }}>
                     {feature.title}
                   </Typography>
-                  <Typography variant="body1" sx={{ color: theme.palette.text.secondary }}>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: theme.palette.text.secondary,
+                      // Add minHeight to ensure description text blocks have consistent height
+                      minHeight: '60px', // Adjust this value based on your content and desired layout
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3, // Limit to 3 lines
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
                     {feature.description}
                   </Typography>
                 </Paper>
