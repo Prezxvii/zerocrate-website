@@ -108,7 +108,7 @@ const BlogSection = () => {
                   sx={{
                     borderRadius: theme.components?.MuiCard?.styleOverrides?.root?.borderRadius || '12px',
                     overflow: 'hidden',
-                    height: '100%',
+                    height: '100%', // Ensures the paper takes full height of its grid item
                     display: 'flex',
                     flexDirection: 'column',
                     textAlign: 'left',
@@ -117,6 +117,8 @@ const BlogSection = () => {
                       boxShadow: theme.shadows[6],
                       transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
                     },
+                    // Add a minHeight to ensure consistency across cards
+                    minHeight: { xs: '450px', sm: '480px', md: '500px' }, // Adjust as needed
                   }}
                 >
                   <Box sx={{ height: '200px', overflow: 'hidden' }}>
@@ -126,22 +128,49 @@ const BlogSection = () => {
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   </Box>
-                  <Box sx={{ padding: theme.spacing(3), flexGrow: 1 }}>
+                  <Box sx={{ padding: theme.spacing(3), flexGrow: 1, display: 'flex', flexDirection: 'column' }}> {/* Added display:flex, flexDirection:column */}
                     <Typography variant="caption" color="text.secondary"
                       sx={{ display: 'flex', alignItems: 'center', marginBottom: theme.spacing(1) }}
                     >
                       <CalendarTodayIcon sx={{ fontSize: 16, mr: 0.5 }} /> {/* Calendar Icon */}
                       {post.date}
                     </Typography>
-                    <Typography variant="h6" component="h3" gutterBottom sx={{ fontWeight: 600, fontSize: { xs: '1.1rem', sm: '1.25rem' } }}>
+                    <Typography
+                      variant="h6"
+                      component="h3"
+                      gutterBottom
+                      sx={{
+                        fontWeight: 600,
+                        fontSize: { xs: '1.1rem', sm: '1.25rem' },
+                        minHeight: '60px', // Adjust based on 2-3 lines of title text
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2, // Limit to 2 lines for title
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
                       {post.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ marginBottom: theme.spacing(2) }}>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        marginBottom: theme.spacing(2),
+                        flexGrow: 1, // Allows excerpt to take available space
+                        minHeight: '70px', // Adjust based on expected excerpt length (e.g., 3-4 lines)
+                        display: '-webkit-box',
+                        WebkitLineClamp: 4, // Limit to 4 lines for excerpt
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
                       {post.excerpt}
                     </Typography>
                     <Button
                       variant="text"
-                      sx={{ textTransform: 'none', color: theme.palette.primary.main }}
+                      sx={{ textTransform: 'none', color: theme.palette.primary.main, marginTop: 'auto' }} // Pushes button to bottom
                       endIcon={<ArrowForwardIcon />} // Arrow icon at the end of the button
                     >
                       Read More
